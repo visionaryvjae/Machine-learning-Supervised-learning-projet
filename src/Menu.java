@@ -17,8 +17,8 @@ public class Menu {
             System.out.println("2. Calculate entropy");
             System.out.println("3. Calculate average entropy");
             System.out.println("4. Naive Bayes");
-            System.out.println("5. Naive Bayes (enter values)");
-            System.out.println("6. Naive Bayes (laplace)");
+            System.out.println("5. Support Vector Machines");
+            System.out.println("6. Mapping function");
 
             Scanner reed = new Scanner(System.in);
             choice = reed.nextInt();
@@ -59,13 +59,25 @@ public class Menu {
                     break;
 
                 case 5:
-                    Scanner richards = new Scanner(System.in);
-                    double inout = richards.nextDouble();
-                    bn.setFreq(inout);
+                    Scanner svm = new Scanner(System.in);
+                    String s1, s2;
+                    System.out.print("Please enter the value of s1: ");
+                    s1 = svm.next();
+                    System.out.print("Please enter the value of s2: ");
+                    s2 = svm.next();
+
+                    bn.SVM(s1, s2);
                     break;
 
                 case 6:
-                    System.out.println("your mean is: "+bn.getFreq());
+                    Scanner map = new Scanner(System.in);
+                    double x = 0, y = 0;
+                    System.out.print("Please enter the x value: ");
+                    x = map.nextDouble();
+                    System.out.print("Please enter the y value: ");
+                    y = map.nextDouble();
+
+                    bn.MappingFunc(x, y);
                     break;
 
                 case 0:
