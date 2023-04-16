@@ -1,67 +1,18 @@
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 
 public class Backend {
 
-    private ArrayList<Double> freq = new ArrayList<Double>();
-    private ArrayList<Integer> xVals = new ArrayList<Integer>();
-    private ArrayList<Integer> yVals = new ArrayList<Integer>();
-    private ArrayList<Double> entropy = new ArrayList<Double>();
-
-    public ArrayList<Double> getEntropy() {
-        return entropy;
-    }
-
-    public ArrayList<Double> getFreq() {
-        return freq;
-    }
-
-    public void setFreq(double num) {
-        freq.add(num);
-        this.freq = freq;
-    }
-
-    public void setEntropy(double val) {
-        entropy.add(val);
-        this.entropy = entropy;
-    }
-
-    private int K;
-    private int pNum;
-
-    public ArrayList<Integer> getxVals() {
-
-        Scanner input =  new Scanner(System.in);
-        for (int i = 1; i <= K; i++)
-        {
-            for (int j = 1; j <= pNum; j++)
-            {
-                System.out.println("Please enter points: \n");
-                System.out.print("please enter x");
-                xVals.add(input.nextInt());
-            }
-        }
-        return xVals;
-    }
-
-    public ArrayList<Integer> getyVals() {
-        return yVals;
-    }
-
     public void calcKMeans(){
-        double dis2 = 0, dis = 0;
-        double cx = 0, cy = 0;
-        double x = 0, y = 0;
-        String val, c1, c2;
-        boolean stop = false; int choice = 0;
+        String c1, c2; //val
+        boolean stop = false;
         Scanner input = new Scanner(System.in);
         DecimalFormat df = new DecimalFormat("0.0000");
         ArrayList<Double> xValues = new ArrayList<>();
         ArrayList<Double> yValues = new ArrayList<>();
-        ArrayList<String> values = new ArrayList<>();
+        //ArrayList<String> values = new ArrayList<>();
         ArrayList<String> roids = new ArrayList<>();
 
 
@@ -80,13 +31,13 @@ public class Backend {
         {
             System.out.println("Please enter your points x and y: \n");
             System.out.print("please enter x");
-            x = input.nextDouble();
-            xValues.add((double) x);
+            double x = input.nextDouble();
+            xValues.add(x);
             System.out.print("please enter y");
-            y = input.nextDouble();
-            yValues.add((double) y);
-            val = x+";"+y;
-            values.add(val);
+            double y = input.nextDouble();
+            yValues.add(y);
+            //val = x+";"+y;
+            //values.add(val);
         }
 
         do{
@@ -96,7 +47,7 @@ public class Backend {
             int m = 1;
 
             Scanner read = new Scanner(System.in);
-            choice = read.nextInt();
+            int choice = read.nextInt();
 
             switch (choice){
 
@@ -110,13 +61,13 @@ public class Backend {
                     ArrayList<Double> Dis2 = new ArrayList<>();
 
                     for(String centroid: roids){
-                        cx = convertToCalc(centroid.substring(0, centroid.indexOf(";")));
-                        cy = convertToCalc(centroid.substring(centroid.indexOf(";")+1));
+                        double cx = convertToCalc(centroid.substring(0, centroid.indexOf(";")));
+                        double cy = convertToCalc(centroid.substring(centroid.indexOf(";")+1));
 
                         for (int j = 0; j < pNum; j++) {
 
-                            dis2 = Math.pow(xValues.get(j) - cx, 2) + Math.pow(yValues.get(j) - cy, 2);
-                            dis = Math.sqrt(dis2);
+                            double dis2 = Math.pow(xValues.get(j) - cx, 2) + Math.pow(yValues.get(j) - cy, 2);
+                            double dis = Math.sqrt(dis2);
 
                             if (m > 1) {
                                 Dis2.add(dis);
@@ -148,7 +99,7 @@ public class Backend {
                     }
 
                     System.out.println("\n");
-                    int b = 0, d = 0;
+                    int b = 0;
                     System.out.println("\n New Groups");
                     for (int item : cent1) {
                         System.out.println("X: " + item + "\tY: " + cent2.get(b));
@@ -184,7 +135,7 @@ public class Backend {
 
                     break;
             }
-        }while(stop == false);
+        }while(!stop);
     }
 
     public void calcEntropy()
@@ -200,13 +151,12 @@ public class Backend {
         double total = Yes + No;
 
         if((Yes == 0) || (No == 0)){
-            answer = 0;
+
         }
         else
         {
             answer = -Yes/total*getLog2(Yes/total) - No/total*getLog2(No/total) ;
         }
-        setEntropy(answer);
         System.out.println("\nYour entropy is: "+df.format(answer)+"\n\n");
     }
 
@@ -233,17 +183,17 @@ public class Backend {
         Scanner in = new Scanner(System.in);
         DecimalFormat df = new DecimalFormat("0.0000");
         String yes, no;
-        double sumYes = 1, sumNo = 1, sumPyes = 1, sumPno = 1, sumP = 1, pYes = 0, pNo = 0, sumHolder = 0, divYes = 0, divNo = 0, div = 0, Yes = 0, No = 0;
+        double sumYes = 1, sumNo = 1, sumP = 1;
 
-        System.out.print("please enter the probability of yes's (format e.g \'7/6\'): ");
+        System.out.print("please enter the probability of yes's (format e.g \"7/6\"): ");
         yes = in.next();
-        pYes = convertToCalc(yes);
-        divYes = Double.parseDouble(yes.substring(0, yes.indexOf("/")));
-        System.out.print("Please enter the probability of No's (format e.g \'7/6\'): ");
+        double pYes = convertToCalc(yes);
+        double divYes = Double.parseDouble(yes.substring(0, yes.indexOf("/")));
+        System.out.print("Please enter the probability of No's (format e.g \"7/6\"): ");
         no = in.next();
-        pNo = convertToCalc(no);
-        divNo = Double.parseDouble(no.substring(0, no.indexOf("/")));
-        div = Double.parseDouble(no.substring(no.indexOf("/")+1));
+        double pNo = convertToCalc(no);
+        double divNo = Double.parseDouble(no.substring(0, no.indexOf("/")));
+        double div = Double.parseDouble(no.substring(no.indexOf("/")+1));
 
         System.out.print("Please enter the total number values to calculate: ");
         int n = in.nextInt();
@@ -251,12 +201,12 @@ public class Backend {
 
         for(int i = 0; i < n; i++){
             System.out.print("\n\nPlease enter the positive probability: ");
-            Yes = in.nextDouble();
-            sumHolder = Yes/divYes;
+            double Yes = in.nextDouble();
+            double sumHolder = Yes/divYes;
             System.out.println("Your positive probability is : "+ sumHolder);
             sumYes *=sumHolder;
             System.out.print("\nPlease enter the negative probability: ");
-            No = in.nextDouble();
+            double No = in.nextDouble();
             sumHolder = No/divNo;
             System.out.println("Your negative probability is : "+ sumHolder);
             sumNo *= sumHolder;
@@ -266,22 +216,17 @@ public class Backend {
         System.out.println("\nP(X|Cyes) = "+df.format(sumYes)+"\nP(X|Cno) = "+df.format(sumNo)+"\nP(X) = "+df.format(sumP));
         System.out.println("p(Cyes) = "+df.format(pYes)+"\np(Cno) = "+df.format(pNo));
 
-        System.out.println("The naive bayes of our \'Yes\' tuple is: "+df.format((sumYes*pYes)/sumP)+"\nThe naive bayes of our \'No\'tuple is: "+df.format((sumNo*pNo)/sumP));
+        System.out.println("The naive bayes of our \"Yes\" tuple is: "+df.format((sumYes*pYes)/sumP)+"\nThe naive bayes of our \"No\"tuple is: "+df.format((sumNo*pNo)/sumP));
     }
 
     public double convertToCalc(String ex)
     {
-        double result = 0;
+        double result = Double.parseDouble(ex);
         if(ex.contains("/")){
-            double firstNum = 0, secondNum = 0;
-            int index = 0;
-            index = ex.indexOf("/");
-            firstNum = Integer.parseInt(ex.substring(0,index));
-            secondNum = Integer.parseInt(ex.substring(index+1));
+            int index = ex.indexOf("/");
+            double firstNum = Integer.parseInt(ex.substring(0,index));
+            double secondNum = Integer.parseInt(ex.substring(index+1));
             result = firstNum/secondNum;
-        }
-        else{
-            result = Double.parseDouble(ex);
         }
         return result;
 
@@ -291,37 +236,36 @@ public class Backend {
     {
         DecimalFormat df = new DecimalFormat("0.0000");
         double x1 = Double.parseDouble(s1.substring(0, s1.indexOf(";"))), y1 = Double.parseDouble(s1.substring(s1.indexOf(";")+1)), x2 = Double.parseDouble(s2.substring(0, s2.indexOf(";"))), y2 = Double.parseDouble(s2.substring(s2.indexOf(";")+1));
-        double xy1 = makePositive(x2-x1), xy2 = makePositive(y2-y1), sum1 = 0, sum2 = 0, a = 0, Wo = 0, m = 0, m2 = 0, w1 = 0, w2 = 0;
+        double xy1 = makePositive(x2-x1), xy2 = makePositive(y2-y1);
 
         System.out.println("W = a[("+Math.round(x1)+";"+Math.round(y1)+") - ("+Math.round(x2)+";"+Math.round(y2)+")]");
 
         System.out.println("W = a("+Math.round(xy1)+";"+Math.round(xy2)+")\n");
-        sum1 = x2*xy1 + y2*xy2;
-        sum2 = x1*xy1 + y1*xy2;
+        double sum1 = x2*xy1 + y2*xy2;
+        double sum2 = x1*xy1 + y1*xy2;
         System.out.println(Math.round(sum2)+"a + Wo = +1");
         System.out.println(Math.round(sum1)+"a + Wo = -1");
-        a = 2/(sum2-sum1);
+        double a = 2/(sum2-sum1);
         System.out.println("a = "+convertDecimalToFraction(a));
 
-        Wo = 1 - sum2*a;
+        double Wo = 1 - sum2*a;
         System.out.println("Wo = "+convertDecimalToFraction(Wo));
 
-        w1 = xy1*a; w2 = xy2*a;
+        double w1 = xy1*a; double w2 = xy2*a;
         System.out.println("W  = ( "+convertDecimalToFraction(w1)+" ; "+convertDecimalToFraction(w2)+" )\n");
         System.out.println("g(x) = ("+convertDecimalToFraction(w1)+")x1 + ("+convertDecimalToFraction(w2)+")x2 + ("+convertDecimalToFraction(Wo)+")");
         System.out.println("g(x) = ("+(w1*reverseFraction(a))+")x1 + ("+(w2*reverseFraction(a))+")x2 + ("+(Wo*reverseFraction(a))+")");
 
-        m2 = Math.pow(w1, 2) + Math.pow((w2), 2);
-        m = 2/Math.sqrt(m2);
+        double m2 = Math.pow(w1, 2) + Math.pow((w2), 2);
+        double m = 2/Math.sqrt(m2);
         System.out.println("m = "+df.format(m));
     }
 
     public void MappingFunc(double x, double y)
     {
-        double line1 = 0, line2 = 0;
         if(checkMapping(x, y)){
-            line1 = 6 - x + Math.pow((x-y), 2);
-            line2 = 6 - y + Math.pow((x-y), 2);
+            double line1 = 6 - x + Math.pow((x-y), 2);
+            double line2 = 6 - y + Math.pow((x-y), 2);
 
             System.out.println("your new coordinates are ("+convertDecimalToFraction(line1)+";"+convertDecimalToFraction(line2)+")");
         }
@@ -358,13 +302,11 @@ public class Backend {
 
     public double makePositive(double val)
     {
-        double finalValue = 0;
+        double finalValue = -1*val;
         if(val > 0){
             finalValue = val;
         }
-        else{
-            finalValue = -1*val;
-        }
+
         return finalValue;
     }
 
@@ -378,14 +320,7 @@ public class Backend {
     public boolean checkMapping(double x, double y)
     {
         double calc = Math.pow(x, 2) + Math.pow(y, 2), calc2 = Math.sqrt(calc);
-        boolean greater = false;
-
-        if(calc2 >= 2){
-            greater = true;
-        }
-        else{
-            greater = false;
-        }
+        boolean greater = calc2 >= 2;
 
         return greater;
     }

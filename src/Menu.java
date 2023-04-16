@@ -1,4 +1,3 @@
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,14 +37,13 @@ public class Menu {
                     ArrayList<Integer> values = new ArrayList<>();
                     ArrayList<Double> ent = new ArrayList<>();
                     int total= 0;
-                    int input = 0;
 
                     System.out.println("Please enter the number of the same class values you have: ");
                     int k = num.nextInt();
                     for (int j = 1; j<= k; j++)
                     {
                         System.out.println("Please enter the total number of times the class value no."+j+" appears\n");
-                        input = num.nextInt();
+                        int input = num.nextInt();
                         values.add(input);
                         System.out.println("Please enter the entropy \n");
                         ent.add(num.nextDouble());
@@ -71,11 +69,10 @@ public class Menu {
 
                 case 6:
                     Scanner map = new Scanner(System.in);
-                    double x = 0, y = 0;
                     System.out.print("Please enter the x value: ");
-                    x = map.nextDouble();
+                    double x = map.nextDouble();
                     System.out.print("Please enter the y value: ");
-                    y = map.nextDouble();
+                    double y = map.nextDouble();
 
                     bn.MappingFunc(x, y);
                     break;
@@ -90,6 +87,6 @@ public class Menu {
                     break;
             }
 
-        }while(stop == false);
+        }while(!stop);
     }
 }
